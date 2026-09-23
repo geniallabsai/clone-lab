@@ -1,0 +1,4 @@
+{
+  "base": "6 fingers, extra fingers, fused fingers, deformed hands, malformed hands, claw-like fingers, reversed thumb, extra arms, extra legs, missing limbs, extra limbs, warped face, asymmetric face, crooked smile, cross-eyed, malformed eyes, double pupil, extra teeth, missing teeth, weird tongue, duplicated person, twin artifact, ghost second person, plastic skin, over-smoothed skin, waxy skin, blurry, out of focus, jpeg artifacts, compression noise, color banding, halo edges, watermarks, text artifacts, garbled letters, warped background, melting background, floating objects, disconnected shadows, inconsistent lighting, distorted proportions, long neck, oversized head, low resolution, oversaturated, vignette burn, lens dust",
+  "uso": "base + negativos_extra do catalogo.json (somam) + termos do job (somam). Nunca remover da base."
+}

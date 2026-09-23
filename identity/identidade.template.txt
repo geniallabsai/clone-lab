@@ -1,0 +1,6 @@
+[BLOCO CONGELADO DE IDENTIDADE — escrito apenas pelo agente 01]
+[Formato: 4 linhas curtas em linguagem de prompt. Exemplo:]
+man, 30-35 years old, tan clear skin with natural texture, rectangular face,
+distinctive thick eyebrows, brown almond eyes, short trimmed beard, black short
+curly hair, athletic build, broad shoulders, usually wears plain dark t-shirts.
+[FIM DO BLOCO — o resto dos prompts NUNCA descreve rosto/pele/cabelo à mão]
