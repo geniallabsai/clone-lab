@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.1.0 (2026-09-23)
+- **Camada de naturalismo** (`protocols/naturalismo.md`): regra 95/5, sinais
+  de olhar-IA, anatomia de pele obrigatória, imperfeição única por quadro
+  escolhida da lista `realismo` de cada cenário.
+- **Luminosidade com números**: novo campo `luminosidade` no catálogo
+  (exposição EV, Kelvin dominante, razão key:fill, proteção de destaque e
+  piso de sombra) em 16/16 cenários; novo bloco no prompt; agente 03
+  reescrito com os 4 números obrigatórios.
+- **Objetos perfeitos**: novo campo `objetos` (anatomia crítica) em 16/16
+  cenários; bloco OBJETOS-CRÍTICOS no prompt; regra do 02: objeto trocado em
+  variação precisa anatomia igual.
+- **Negativos: 1 base virou 4 imutáveis** (pessoas / objetos / luz /
+  naturalismo) em `negativos.json`.
+- **QC de 12 → 16 itens**: +13 objetos críticos, +14 física, +15
+  luminosidade, +16 naturalismo. `clone.py qc` valida 16 keywords (imunes a
+  acento), âncoras duplas no negativo ("6 fingers" + "melted") e os blocos
+  novos do prompt.
+- Retrabalho: itens 13–16 só podem melhora (senão a tentativa anterior vale
+  mais) — decisão registrada.
+
+
 ## 1.0.0 (2026-09-23)
 - Pacote inicial: SKILL de orquestração em 6 fases + 7 leis.
 - 5 agentes: analista de imagens, criativos clones, iluminação, copy & social,

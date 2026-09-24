@@ -6,19 +6,20 @@ Uso:
   clone.py cenario [--tipo X] [--seed N]        escolhe cenário (SEMPRE 0–15)
   clone.py prompt --nro N [--acao "..."] [--variacoes K] [--slug s]
                                                  monta drafts/<job>/ completo
-  clone.py qc <dir-job>                         valida entrega estrutural
-  clone.py check                                self-teste: 100 sorteios em 0..15
+  clone.py qc <dir-job>                         valida entrega estrutural (16 itens)
+  clone.py check                                self-teste: sorteios sempre em 0..15
 
 Global: --root <pasta> (senão procura CLONE-CONFIG.json subindo do cwd)
 Python 3 stdlib apenas.
 """
-import argparse, hashlib, json, re, struct, sys
+import argparse, hashlib, json, re, struct, sys, unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
 PACOTE = Path(__file__).resolve().parent
 CAT = json.loads((PACOTE / "scenarios" / "catalogo.json").read_text(encoding="utf-8"))
 NEG = json.loads((PACOTE / "scenarios" / "negativos.json").read_text(encoding="utf-8"))
+NAT = CAT.get("naturalismo", {})
 N_MAX = CAT["faixa"][1]
 FOTOS = {".jpg", ".jpeg", ".png", ".webp"}
 SUBDIRS = ["_identity", "drafts", "saida", "state"]
@@ -31,6 +32,12 @@ def agora_iso():
 def slugify(s):
     s = re.sub(r"[^a-z0-9]+", "-", str(s).lower()).strip("-")
     return s[:40] or "sem-titulo"
+
+
+def norm(s):
+    """minúsculas sem acentos — matching de keywords imune a ç/ã/etc."""
+    s = unicodedata.normalize("NFD", str(s).lower())
+    return "".join(c for c in s if unicodedata.category(c) != "Mn")
 
 
 def find_root(explicit=None):
@@ -99,7 +106,6 @@ def cmd_init(a):
                 problemas.append(f"{p.name}: {wh[0]}x{wh[1]} (pequena p/ detalhe facial)")
             elif wh is None:
                 problemas.append(f"{p.name}: dimensões ilegíveis")
-    # templates de identidade (não sobrescrevem análise existente)
     idir = raiz / "_identity"
     mapa_t = PACOTE / "identity" / "mapeamento-facial.template.md"
     ident_t = PACOTE / "identity" / "identidade.template.txt"
@@ -157,8 +163,7 @@ def escolher(cfg, tipo=None, seed=None, silencioso=False):
         n = next((x for x in ordem if x not in usados), ordem[-1])
     assert 0 <= n <= N_MAX, f"numeração fora da faixa: {n}"
     entry = next(e for e in CAT["enarios"] if e["nro"] == n)
-    # histórico sempre avança (anti-repetição dos últimos 3); quem decide
-    # gravar em disco é o chamador (cmd_cenario).
+    # histórico sempre avança (anti-repetição dos últimos 3)
     cfg.setdefault("last_scenarios", []).append(n)
     cfg["last_scenarios"] = cfg["last_scenarios"][-10:]
     return entry
@@ -199,7 +204,10 @@ def esqueleto_qc(e):
 def esqueleto_negativo(e):
     extra = e["negativos_extra"]
     return (f"# NEGATIVO — Cenário {e['nro']:02d} ({e['nome']})\n\n"
-            f"## Base (imutável)\n{NEG['base']}\n\n"
+            f"## Base pessoas (imutável)\n{NEG['base']}\n\n"
+            f"## Objetos (imutável)\n{NEG['objetos']}\n\n"
+            f"## Luz (imutável)\n{NEG['luz']}\n\n"
+            f"## Naturalismo (imutável)\n{NEG['naturalismo']}\n\n"
             f"## Extras do cenário {e['nro']:02d}\n{extra}\n\n"
             "## Adições do job\n_(termos específicos desta entrega — somam, nunca substituem)_\n")
 
@@ -217,6 +225,11 @@ def cmd_prompt(a):
     else:
         ident = "(identidade.txt ausente — rode a fase 1)"
         aviso = "\n[aviso: identidade ausente]"
+    objs = e.get("objetos", [])
+    obj_lines = "\n".join(f"- {o}" for o in objs) if objs else "- nenhum objeto crítico neste cenário (somente pessoa+fundo)"
+    nat_mod = NAT.get("modificador", "")
+    nat_regra = NAT.get("regra", "")
+    nat_pele = NAT.get("pele", "")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%MZ")
     job = a.slug or f"{stamp}-{n:02d}-{slugify(a.acao or e['nome'])}"
     job = slugify(job)
@@ -235,15 +248,31 @@ def cmd_prompt(a):
 {e['luz']}
 _(agente 03 pode ajustar ângulo/intensidade por ocasião; espectro do cenário se mantém)_
 
+## LUMINOSIDADE (obrigatório — sem número, é chute)
+{e.get('luminosidade', 'ver catalogo.json')}
+Regra: 1 temperatura dominante (+1 acento SÓ se há prático visível justificando).
+Destaques nunca estourados; sombras nunca apagadas.
+
+## OBJETOS-CRÍTICOS (deem geometricamente perfeitos)
+{obj_lines}
+Descreva cada parte listada acima no prompt final — objeto sem anatomia derrete.
+
 ## AÇÃO / CONTEÚDO
 {a.acao or e['acao_padrao']}
 
 ## FORMATO
 proporção: {e['aspecto']} · câmera: {e['camera']}
 
+## NATURALISMO (regra 95/5 — anti-olhar-IA)
+{nat_mod}
+{nat_regra}
+{nat_pele}
+A imperfeição que vende ESTE cenário: {e.get('realismo', '')}
+
 ## VARIAÇÕES ({k})
 Gerar {k} variação(ões) mudando SOMENTE: composição, roupa, adereço/prop, expressão leve.
 CONGELADO em todas: rosto, tom de pele, textura da pele, cabelo, silhueta.
+Objeto trocado em variação precisa ANATOMIA IGUAL ao original (regra dos objetos-críticos).
 V1: _(escrever o que muda)_{''.join(f"\nV{i}: _(escrever o que muda)_" for i in range(2, k + 1))}
 """
     (jdir / "prompt.md").write_text(prompt, encoding="utf-8")
@@ -251,13 +280,15 @@ V1: _(escrever o que muda)_{''.join(f"\nV{i}: _(escrever o que muda)_" for i in 
     (jdir / "copy.md").write_text(esqueleto_copy(e), encoding="utf-8")
     (jdir / "qc.md").write_text(esqueleto_qc(e), encoding="utf-8")
     print(f"DRAFT: {jdir}")
-    print(f"CENÁRIO: {n:02d} — {e['nome']} · variações: {k}")
-    print("próximo: agente 02 revisa prompt · 03 confere luz · 04 preenche copy · 05 gera + QC")
+    print(f"CENÁRIO: {n:02d} — {e['nome']} · variações: {k} · objetos-críticos: {len(objs)}")
+    print("próximo: agente 02 revisa prompt · 03 confere LUZ+LUMINOSIDADE · 04 preenche copy · 05 gera + QC(16)")
 
 
 # ---------------- qc ----------------
-ITENS_QC = ["dedos", "mão", "rost", "olho", "membro", "duplic", "boca",
-            "texto", "propor", "fundo", "ilumina", "pele"]
+ITENS_QC = ["dedos", "mao", "rost", "olho", "membro", "duplic", "boca",
+            "texto", "propor", "fundo", "iluminacao", "pele",
+            "objetos criticos", "fisica", "luminos", "naturalismo"]
+ÂNCORAS_NEG = [("6 fingers", "base pessoas (dedos)"), ("melted", "base objetos (geometria)")]
 
 
 def cmd_qc(a):
@@ -267,35 +298,39 @@ def cmd_qc(a):
         if not (d / f).exists():
             errs.append(f"falta {f}")
     if (d / "negativo.md").exists():
-        nt = (d / "negativo.md").read_text(encoding="utf-8", errors="replace").lower()
-        if "6 fingers" not in nt and "seis dedos" not in nt:
-            errs.append("negativo sem '6 fingers' (base obrigatória)")
+        nt = norm((d / "negativo.md").read_text(encoding="utf-8", errors="replace"))
+        for anc, nome in ÂNCORAS_NEG:
+            if anc not in nt:
+                errs.append(f"negativo sem '{anc}' ({nome})")
     if (d / "copy.md").exists():
-        ct = (d / "copy.md").read_text(encoding="utf-8", errors="replace")
-        cl = ct.lower()
+        ct = norm((d / "copy.md").read_text(encoding="utf-8", errors="replace"))
         for b in ["hook", "legenda", "cta", "hashtag"]:
-            if b not in cl:
+            if b not in ct:
                 errs.append(f"copy sem bloco {b.upper()}")
     if (d / "qc.md").exists():
-        qt = (d / "qc.md").read_text(encoding="utf-8", errors="replace").lower()
+        qt = norm((d / "qc.md").read_text(encoding="utf-8", errors="replace"))
         for k in ITENS_QC:
             if k not in qt:
                 errs.append(f"checklist sem item '{k}'")
         if not re.search(r"liberado|retrabalho", qt):
             errs.append("veredito ausente (LIBERADO ou RETRABALHO)")
-    m = re.search(r"(?:cenário|cenario)\s+(\d{1,2})",
-                  (d / "qc.md").read_text(encoding="utf-8", errors="replace")
-                  if (d / "qc.md").exists() else "")
-    if m:
-        n = int(m.group(1))
-        if not (0 <= n <= N_MAX):
-            errs.append(f"cenário {n} fora da faixa 0-{N_MAX}")
+        m = re.search(r"(?:cen[aá]rio)\s+(\d{1,2})", qt)
+        if m:
+            nv = int(m.group(1))
+            if not (0 <= nv <= N_MAX):
+                errs.append(f"cenário {nv} fora da faixa 0-{N_MAX}")
+    if (d / "prompt.md").exists():
+        pt = norm((d / "prompt.md").read_text(encoding="utf-8", errors="replace"))
+        for bloco in ["luminosidade", "objetos-criticos", "naturalismo"]:
+            if bloco not in pt:
+                errs.append(f"prompt sem bloco '{bloco.upper()}' (v1.1)")
     print(f"[clone-lab] qc {d.name}: {len(errs)} problema(s)")
     for e_ in errs:
         print("  ERRO", e_)
     if not errs:
-        print("  OK estrutura: 4 arquivos, 12 itens de checklist, veredito, negativo com base.")
-        print("  (o julgamento visual dos itens é do agente 05 / humano)")
+        print("  OK estrutura: 4 arquivos, 16 itens de checklist, veredito, negativo com "
+              "base de 4 seções, prompt com LUZ/LUMINOSIDADE/OBJETOS/NATURALISMO.")
+        print("  (o julgamento visual dos 16 itens é do agente 05 / humano)")
     sys.exit(1 if errs else 0)
 
 
@@ -314,8 +349,9 @@ def cmd_check(a):
         seq.append(e["nro"])
     print(f"[clone-lab] check OK: {a.n}/{a.n} sorteios dentro de 0..{N_MAX}; "
           f"{len(vistos)} números distintos alcançados")
-    print(f"[clone-lab] check anti-repetição: sequência {seq} (sem 3 iguais seguidos: "
-          f"{all(not (seq[i] == seq[i+1] == seq[i+2]) for i in range(len(seq)-2))})")
+    ok3 = all(not (seq[i] == seq[i + 1] == seq[i + 2]) for i in range(len(seq) - 2))
+    print(f"[clone-lab] check anti-repetição: sequência {seq} (sem 3 iguais seguidos: {ok3})")
+    sys.exit(0 if ok3 else 1)
 
 
 def main():
@@ -339,7 +375,7 @@ def main():
     p.add_argument("--slug", default=None)
     p.set_defaults(fn=cmd_prompt)
 
-    p = sub.add_parser("qc", help="valida entrega estrutural")
+    p = sub.add_parser("qc", help="valida entrega estrutural (16 itens)")
     p.add_argument("dir")
     p.set_defaults(fn=cmd_qc)
 

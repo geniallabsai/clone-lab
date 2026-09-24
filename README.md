@@ -1,4 +1,4 @@
-# CloneLab 🎭
+# CloneLab 🎭 (v1.1)
 
 **Pacote ultra de skills: um esquadrão de agentes que transforma o SEU dataset
 de fotos em clonagens consistentes suas — em qualquer cenário, com número,
@@ -57,12 +57,20 @@ Toda entrega sai em `saida/<data>--<nro>--<slug>/` com `prompt.md`,
 
 ## Garantias
 
-1. **Sem QC, não tem entrega** — o agente negativo roda em toda saída.
+1. **Sem QC, não tem entrega** — o agente negativo roda em toda saída com
+   **16 itens**: pessoas, objetos conferidos parte a parte, física,
+   luminosidade e naturalismo (anti-olhar-IA).
 2. **Número sempre 0–15** — fora da faixa o próprio código aborta.
 3. **Identidade é arquivo** — prompts nunca saem da memória; saem de
-   `_identity/identidade.txt` (congelado: rosto/pele/calo são variáveis imutáveis).
-4. **Dataset é somente leitura** — os agentes não tocam suas fotos originais.
-5. **Reverso é possível** — cada entrega guarda prompt + negativo + veredito.
+   `_identity/identidade.txt` (congelado: rosto/pele/cabelo são variáveis imutáveis).
+4. **Luz com números** — todo prompt declara exposição (EV), temperatura
+   dominante (K), razão key:fill e proteção de destaques/sombras.
+5. **Objetos perfeitos** — cada cenário traz sua lista de objetos-críticos
+   com anatomia obrigatória no prompt (alça, grade, logo, trama do tecido).
+6. **Cena com vida** — regra 95/5: exatamente uma imperfeição plausível por
+   quadro, escolhida da lista do cenário (`protocols/naturalismo.md`).
+7. **Dataset é somente leitura** — os agentes não tocam suas fotos originais.
+8. **Reverso é possível** — cada entrega guarda prompt + negativo + veredito.
 
 ## Integração (opcional)
 

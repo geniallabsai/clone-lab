@@ -1,10 +1,11 @@
 ---
 name: clone-lab
-version: 1.0.0
+version: 1.1.0
 description: >
   Esquadrão de agentes para clonagem criativa da imagem do usuário:
-  analisa o dataset, mapeia identidade, compõe 16 cenários numerados (0–15),
-  ilumina, escreve copy social e aplica QC negativo (vetos a distorções).
+  analisa o dataset, mapeia identidade, compõe 16 cenários numerados (0–15)
+  com naturalismo, luminosidade medida e objetos perfeitos; ilumina, escreve
+  copy social e aplica QC negativo de 16 itens (gate).
 entrypoint: BOOT.md
 requires: python3 (para clone.py; geração de imagem via ferramenta/API do agente)
 ---
@@ -19,57 +20,51 @@ copy/legenda para imagem sua, ou qualquer "me põe nesse cenário".
 ## As 6 fases (ordem fixa, sem pular)
 
 ### 0. CONTRATO
-Confirmar: (a) caminho do dataset (perguntar se nunca foi dado; gravar em
-`CLONE-CONFIG.json`); (b) cenário pedido ou "à escolha do código"; (c) formato
-de saída (proporção vem do cenário, mas respeitar pedido explícito do usuário).
+Confirmar: (a) caminho do dataset (gravar em `CLONE-CONFIG.json`); (b)
+cenário pedido ou "à escolha do código"; (c) formato (proporção vem do
+cenário; pedido explícito do usuário vence).
 
 ### 1. IDENTIFICAR — agente `01-analista-imagens`
-- Ler as fotos do dataset; ATUALIZAR `_identity/mapeamento-facial.md`
-  (seções fixas) e REESCREVER `_identity/identidade.txt` (bloco pronto para
-  prompt, ≤200 palavras, linguagem de prompt).
-- Regra: identidade.txt é a ÚNICA fonte do bloco de rosto/corpo em prompts.
-- Se dataset mudou desde a última vez (arquivos novos), reanalisar o mínimo
-  necessário e atualizar o mapeamento com campo `atualizado_em`.
+- Ler as fotos do dataset; ATUALIZAR `_identity/mapeamento-facial.md` e
+  REESCREVER `_identity/identidade.txt` (≤200 palavras, linguagem de prompt).
+- Identidade.txt é a ÚNICA fonte do bloco de rosto/corpo nos prompts.
+- Dataset mudou desde a última vez = reanálise mínima + data atualizada.
 
 ### 2. ESCOLHER CENÁRIO — código (não chute!)
 ```bash
 python3 $CLONE_PKG/clone.py cenario [--tipo POV|PODCAST|NORMAL|...] [--seed N]
 ```
-- O comando devolve SEMPRE um inteiro 0–15 (garantido por assert) e grava no
-  histórico. Cenário sem pedido = o código escolhe (evita os 3 últimos).
-- O número escolhido define TUDO do bloco de cenário: `scenarios/catalogo.json`.
+- Devolve SEMPRE inteiro 0–15 (assert) e grava histórico. Sem pedido, o
+  código escolhe (evita os 3 últimos).
+- O número define tudo: cenário, luz, luminosidade, objetos-críticos,
+  naturalismo, hook — tudo em `scenarios/catalogo.json`.
 
 ### 3. COMPOR — agentes `02-criativos-clones` + `03-iluminacao`
 - Rodar `python3 $CLONE_PKG/clone.py prompt --nro N --acao "…" [--variacoes K]`
-  → cria `drafts/<job>/` com `prompt.md` + `negativo.md` + esqueletos
-  `copy.md`/`qc.md`.
-- O agente 02 revisa o `prompt.md`: ação do conteúdo, variação de criativo
-  (se for clonar um criativo existente: lista variáveis congeladas + máximo
-  3 mudanças de set/roupa/adereço — NUNCA rosto/pele/cabelo).
-- O agente 03 confirma o bloco LUZ (pode ajustar temperatura/ângulo por
-  ocasião, mas o tipo de luz vem do catálogo do número sorteado).
+  → `drafts/<job>/` com `prompt.md` (9 blocos), `negativo.md` (4 bases +
+  extras), esqueletos `copy.md`/`qc.md`.
+- 02 revisa: ação, variação de criativo (máx 3 mudanças; objeto trocado
+  leva anatomia), escolhe a ÚNICA imperfeição da lista `realismo` do cenário.
+- 03 confirma LUZ e escreve LUMINOSIDADE com os 4 números (EV, K dominante,
+  razão key:fill, proteção de destaque/piso de sombra).
 
 ### 4. COPY — agente `04-copy-social`
-Preencher `drafts/<job>/copy.md`: HOOK (3 s, fala ou texto na tela), LEGENDA,
-CTA, HASHTAGS (5–10, misto de alcance+nicho), FORMATO (proporção + plataforma
-ideal do cenário). Linguagem = a do usuário.
+`copy.md`: HOOK (3 s) + LEGENDA + CTA único + 5–10 hashtags + FORMATO
+(proporção/plataforma do cenário). Idioma do usuário.
 
 ### 5. NEGATIVO/QC — agente `05-negativo-qc` (GATE — não é opcional)
-- Garantir que `negativo.md` contém a biblioteca base (inclui "6 fingers") +
-  extras do cenário (já montado pelo código; o agente pode adicionar
-  termos específicos do job, nunca remover da base).
-- Gerar a imagem. Executar os 12 itens do checklist do `qc.md` UM A UM
-  (contar dedos literalmente; conferir rosto contra `_identity/mapeamento-facial.md`).
-- Veredito: **LIBERADO** (todos os 12 ok) ou **RETRABALHO** (lista itens
-  reproados + ajuste específico no prompt). RETRABALHO volta para a fase 3
-  com no MÁXIMO 2 repetições; após isso, escala para o humano com o relatório.
+- Negativo com as 4 bases imutáveis (pessoas/objetos/luz/naturalismo) +
+  extras do cenário + adições do job.
+- Gerar a imagem e executar os 16 itens do `qc.md` UM A UM (dedos contados;
+  objetos conferidos parte a parte; exposição e temperatura checar
+  contra os números declarados; naturalismo contra a lista do cenário).
+- Veredito LIBERADO (16/16) ou RETRABALHO (itens + ajuste específico).
+  Máx 2 retrabalhos; itens 13–16 só podem melhora; depois, escala humano.
 
 ### 6. ENTREGAR
-- Mover o job completo para `saida/<AAAA-MM-DD>--<hhmm>--<agente>--<nro>-<slug>/`.
-- Escrever `registrar.md` (10 linhas: cenário N, decisão de luz, veredito QC,
-  o que reprovou e como foi corrigido).
-- Opcional (SecondMind configurado): nota de sessão no vault com links p/
-  decisão de cenário e aprendizados (reaproveitamento entre sessões).
+- Mover o job para `saida/<AAAA-MM-DD>--<hhmm>--<agente>--<nro>-<slug>/`.
+- `registrar.md` (10 linhas: cenário N, luz+luminosidade, veredito, correções).
+- Opcional (SecondMind): nota de sessão no vault.
 
 ## Leis (invioláveis)
 1. Sem QC (fase 5) não existe entrega. O agente negativo é gate, não sugestão.
@@ -78,8 +73,9 @@ ideal do cenário). Linguagem = a do usuário.
 4. Clone muda SET, LUZ e AÇÃO — nunca rosto, tom de pele ou cabelo.
 5. Dataset é somente leitura: nunca editar/renomear/mover fotos originais.
 6. Máximo de 2 retrabalhos automáticos; depois, humano decide.
-7. Cinco dedos por mão, pares de membros completos — verificação item a item,
-   nunca "parece certo".
+7. Cinco dedos por mão, pares de membros completos — verificação item a item.
+8. LUZ SEM NÚMERO É CHUTE: todo prompt declara exposição (EV), temperatura
+   dominante (K) e objetos-críticos com anatomia escrita.
 
 ## Estrutura do workspace (contrato)
 ```
@@ -87,7 +83,7 @@ ideal do cenário). Linguagem = a do usuário.
 ├── (suas fotos — somente leitura)
 ├── CLONE-CONFIG.json     # dataset, histórico de cenários
 ├── _identity/
-│   ├── mapeamento-facial.md   # análise detalhada (humano pode auditar)
+│   ├── mapeamento-facial.md   # análise detalhada (auditable)
 │   └── identidade.txt         # BLOCO CONGELADO p/ prompt (≤200 palavras)
 ├── drafts/<job>/          # prompt.md, negativo.md, copy.md, qc.md (+imagem)
 ├── saida/<job-final>/     # entregas aprovadas + registrar.md

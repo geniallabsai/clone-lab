@@ -1,134 +1,398 @@
 {
-  "versao": 1,
-  "faixa": [0, 15],
-  "enarios": [
-    {"nro": 0, "nome": "NORMAL", "aliases": ["normal", "retrato", "basico", "classico"],
-     "quando": "retrato base limpo; teste de identidade; avatar",
-     "aspecto": "1:1 (feed) ou 4:5", "camera": "medium close, lente 50mm, fundo neutro levemente desfocado",
-     "luz": "key suave frontal a 30 graus, fill alto (razao 4:1), sem rim forte; 5600K neutra",
-     "prompt": "retrato de estúdio limpo, fundo neutro cinza-claro sem objetos, olhando para a camera, postura natural relaxada, enquadramento do peito para cima",
-     "acao_padrao": "olhar direto para a camera com expressao neutra-confiante",
-     "negativos_extra": "fundo movimentado, objetos sobrepostos, sombras duras",
-     "hook": "direto: diga quem é / o que faz na primeira linha (sem mistério)"},
-    {"nro": 1, "nome": "ESTILO PODCAST", "aliases": ["podcast", "estilo podcast", "gravação", "recording"],
-     "quando": "autoridade, conversa longa, episódios",
-     "aspecto": "16:9 (capa) ou 4:5", "camera": "medium shot 35mm, olho da camera, leve profundidade de campo",
-     "luz": "trio quente intimista: key 3200K a 45 graus, fill suave do oposto, rim leve traseiro; sombras suaves no rosto",
-     "prompt": "set de podcast profissional, microfone dinâmico amarrado na frente, fones na orelha, estante desfocada ao fundo com livros, parede escura quente, luz de estudio amarelada",
-     "acao_padrao": "fala para a camera como se respondesse alguem, uma maos perto do microfone",
-     "negativos_extra": "microfones duplicados, fones duplicados, cabos cruzando o rosto, segundo apresentador fantasma, letras tortas no estúdio",
-     "hook": "pergunta que só você responde: 'se eu te dissesse que...'"},
-    {"nro": 2, "nome": "POV", "aliases": ["pov", "primeira pessoa"],
-     "quando": "imersão, interação direta, humor, produto na mão",
-     "aspecto": "9:16", "camera": "close levemente baixo (altura de quem conversa), 24mm, leve movimento de mão",
-     "luz": "prática natural: janela lateral difusa 5600K, fill do ambiente, sem rigidez de estúdio",
-     "prompt": "cena point-of-view: a camera e o ponto de vista de quem esta conversando com a pessoa, a pessoa olha direto para a lens, proxidade de conversa real (a uns 60cm), um objeto na mao quando fizer sentido a acao",
-     "acao_padrao": "conversa direta como se a camera fosse outra pessoa; gestos naturais de dialogo",
-     "negativos_extra": "dedos em garra, polegar invertido, mao cobrindo a lens por acidente, objeto duplo na mao, segundas maos fantasmas",
-     "hook": "comece no meio da frase: 'entao eu te pergunto:' (efeito de conversa interceptada)"},
-    {"nro": 3, "nome": "REELS VERTICAL", "aliases": ["reels", "tiktok", "vertical", "curto"],
-     "quando": "alcance, trend, storytelling rápido",
-     "aspecto": "9:16", "camera": "vertical, 24mm, energia: olhar forte, quebra de zoom sutil no hook",
-     "luz": "key frontal suave + rim de separação leve; contraste médio-alto para leitura em tela pequena",
-     "prompt": "video vertical de reels, enquadrado do quadril para cima, fundo urbano leve desfocado, composicao que deixa espaco em cima para texto, a pessoa gesticula com proposito",
-     "acao_padrao": "fala com energia para a camera, gesto de chamada no primeiro segundo",
-     "negativos_extra": "texto fora do espaco reservado, corte de ombro pela moldura, segunda pessoa no fundo",
-     "hook": "afirmacao polêmica ou número: '3 erros que estão matando seu X'"},
-    {"nro": 4, "nome": "STORY CONVERSA", "aliases": ["story", "casual", "dia a dia"],
-     "quando": "proximidade, bastidores, resposta direta",
-     "aspecto": "9:16", "camera": "selfie-real 24mm, levemente de cima (angulo de celular na mao), proximidade",
-     "luz": "ring light frontal amaciado 4500K, brilho de celular, sombras mínimas",
-     "prompt": "story autenticas: parece tirada de celular, fundo de ambiente real (sala/rua), leve imperfeicao de foco, a pessoa segura a camera com uma mao e fala",
-     "acao_padrao": "responde uma DM imaginada, tom conversado",
-     "negativos_extra": "luz de estudio perfeita demais (quebra a vibe), anel de luz com reflexo duplo estranho, dedo cortando o canto",
-     "hook": "repita a pergunta do seguidor: 'me perguntaram se... a resposta curta: sim.'"},
-    {"nro": 5, "nome": "GIMBAL MOVIMENTO", "aliases": ["gimbal", "movimento", "caminhando"],
-     "quando": "dinamismo, transição, energia de rua",
-     "aspecto": "9:16", "camera": "tracking em movimento a 35mm, levemente abaixo do olho, leve motion blur de fundo",
-     "luz": "natural da cena (dia aberto 5600K ou noturno de letreiros), sem hard artificial",
-     "prompt": "caminhando ate a camera em avenida/corredor, camera em gimbal recuando, fundo com leve motion blur, roupas com movimento, passo confiante",
-     "acao_padrao": "caminha falando direto para a camera, olhar constante",
-     "negativos_extra": "passos congelados/estranhos, perna extra no movimento, cabelo parado enquanto corpo anda, reflexo duplo de camera",
-     "hook": "frase que completa com a chegada: 'tá indo te mostrar uma coisa...'"},
-    {"nro": 6, "nome": "QUARTO ESTILO", "aliases": ["quarto", "cozy", "home", "setup"],
-     "quando": "identidade criador, setup, rotina, vídeo-aula longa",
-     "aspecto": "16:9 ou 4:5", "camera": "fixa 35mm, plano médio, profundidade que mostra o setup desfocado",
-     "luz": "mix quente aconchegante: lampada de mesa 2700K como prática + key frontal suave 4500K, janela fria leve ao fundo",
-     "prompt": "cantinho de quarto/escritorio pessoal: carteira com notebook, lampada de mesa acesa, plantas, poster na parede desfocada, luz aconchegante de fim de tarde",
-     "acao_padrao": "sentado na frente do setup, pausa pensativa olhando a camera",
-     "negativos_extra": "setup genérico de banco de imagem, monitores duplicados, cabos visíveis demais, relógio com horas erradas",
-     "hook": "confissão de rotina: 'o que ninguém conta sobre trabalhar de casa...'"},
-    {"nro": 7, "nome": "ESTUDIO PROFISSIONAL", "aliases": ["estudio", "profissional", "corp"],
-     "quando": "site, pitch, capa de lançamento, corporativo com cara",
-     "aspecto": "4:5 ou 1:1", "camera": "85mm, retrato formal do peito pra cima, foco cirúrgico no olho mais próximo",
-     "luz": "clássica de estúdio: key 45 graus 5200K (softbox), fill 2x mais fraco, hair light traseiro superior; fundo com gradiente",
-     "prompt": "estudio fotográfico profissional, fundo com gradiente suave de cor sólida, luz classica de tres pontos, roupa social despojada, posicao de poder relaxada",
-     "acao_padrao": "expressao confiante, leve sorriso fechado, ombros abertos",
-     "negativos_extra": "reflexo duplo de softbox no olho, fundo com emenda visivel, sombra dupla sob o queixo",
-     "hook": "autoridade seca: uma frase de posicionamento, sem grito"},
-    {"nro": 8, "nome": "AURORE", "aliases": ["aurea", "golden hour", "anoitecer"],
-     "quando": "emoção, lifestyle, encerramento de dia",
-     "aspecto": "9:16 ou 16:9", "camera": "35mm, contraluz com proteção de sombra no rosto (fill da mão/reflexo)",
-     "luz": "sol baixo atrás 2800K, rim de fogo no cabelo/ombro, fill dourado de rebote na frente; céu alaranjado",
-     "prompt": "golden hour ao ar livre, sol baixo criando rim light quente nos contornos, leve flare controlado na lente, sombras longas, tom dourado-rosado no ar",
-     "acao_padrao": "olhando levemente para o lado pensando, cabelo mexido pelo vento",
-     "negativos_extra": "duas sombras em direções diferentes, sol duplo, pele verde de mistura de temperatura, nuvens sintéticas perfeitas",
-     "hook": "frase de fechamento de dia: 'isso que ninguém vê antes das 6 da manhã...'"},
-    {"nro": 9, "nome": "URBANO", "aliases": ["urbano", "rua", "street", "candid"],
-     "quando": "atitude, streetwear, prova social de vida real",
-     "aspecto": "9:16", "camera": "50mm, sensação de foto de passagem, foco rápido",
-     "luz": "natural de rua: dia nublado difuso ou letreiro noturno como prática pontual",
-     "prompt": "street photography urbana, calçadão/avenia, bokeh de letreiros e pessoas ao fundo, vestimenta streetwear, atitude de quem passa despercebido",
-     "acao_padrao": "olha de perfil para a camera como quem acabou de notar o fotografo",
-     "negativos_extra": "pessoas fantasma cortadas ao meio, letreiro com letra errada, duas sombras de calçada",
-     "hook": "contraste: a cidade grita, a frase sussurra"},
-    {"nro": 10, "nome": "CAFETERIA", "aliases": ["cafeteria", "cafe", "work cafe"],
-     "quando": "relatable, rotina, conteúdo de valor ('te ensinando')",
-     "aspecto": "4:5", "camera": "35mm de lado da mesa (visão do outro cliente), lata/café em primeiro plano levemente desfocado",
-     "luz": "janela lateral natural 5600K, contraste suave, vapor do café como textura (opcional)",
-     "prompt": "cafeteria com luz de janela, mesa de madeira, notebook aberto e cafe na frente, cadeira de restaurante ao fundo desfocada, atmosfera tranquila de trabalho remoto",
-     "acao_padrao": "explica algo apontando para o notebook, sorriso leve, cafe perto",
-     "negativos_extra": "copos duplos, reflexo estranho na tela, letreiro do cafe com palavra torta, mao com 6 dedos segurando a caneca",
-     "hook": "promessa prática: 'a mesma ideia que usei pro meu X, em 30 segundos'"},
-    {"nro": 11, "nome": "FITNESS", "aliases": ["fitness", "academia", "treino", "gym"],
-     "quando": "transformação, disciplina, antes/depois, prova de processo",
-     "aspecto": "9:16", "camera": "baixa 28mm (ângulo heróico), close no esforço",
-     "luz": "fluorescente de academia real (5600K frio) ou janela lateral dura de box; suor = highlight real",
-     "prompt": "academia funcional, halteres/barras ao fundo, roupa tecnica correta, gota de sudo no rosto, luz dura lateral marcando o relevo muscular, ambiente real de treino",
-     "acao_padrao": "pausa entre repeticoes olhando a camera, respiracao visivel",
-     "negativos_extra": "halter deformado/derretido, corda do aparelho fantasma, espelho refletindo versao diferente do rosto, suor virando poça fora do lugar",
-     "hook": "número de processo: 'dia 47. o que mudou desde o 1:'"},
-    {"nro": 12, "nome": "PALCO", "aliases": ["palco", "apresentacao", "talk", "keynote"],
-     "quando": "grandeza, evento, fala, autoridade pública",
-     "aspecto": "16:9", "camera": "85mm da plateia (leve subida), spotlight com facho visível na fumaça",
-     "luz": "spot principal 4800K duro com pool no chão, fill azul frio residual, plateia preta",
-     "prompt": "palco de conferencia, spot unico com facho visivel na fumaca leve, plateia em silhueta escura, microfone de lapela, tela gigante desfocada atraz",
-     "acao_padrao": "gesto de apertura na fala, olhar varrendo a plateia",
-     "negativos_extra": "duas pessoas no palco sem pedido, letreiro do evento com letras tortas, facho de luz sem fonte visivel, plateia com rostos borrados estranhos",
-     "hook": "a frase da talk: a que valeria gravar no celular"},
-    {"nro": 13, "nome": "LIFESTYLE PRODUCOAO", "aliases": ["lifestyle", "flatlay", "producao", "unboxing"],
-     "quando": "produto no contexto, rotina curada, 'como eu uso'",
-     "aspecto": "4:5", "camera": "overhead-leve 45 graus com a pessoa no quadro + flatlay de elementos",
-     "luz": "difusa ampla (softbox grande ou varanda), sombras suaves e longas em diagonal",
-     "prompt": "composicao lifestyle overhead-diagonal: a pessoa na cena com os objetos do produto dispostos com folga (caneca, caderno, acessorios), paleta coerente, espaco negativo generoso",
-     "acao_padrao": "interage com um dos objetos (abre/escreve/apresenta) olhando para a camera",
-     "negativos_extra": "objetos flutuando sem sombra, sombra dupla dos objetos, logo de marca aleatoria, mao cortada pela borda do quadro",
-     "hook": "o item-herói nomeado: 'esse objeto que resolveu meu X'"},
-    {"nro": 14, "nome": "NEON NOTURNO", "aliases": ["neon", "noturno", "cyber", "noite"],
-     "quando": "futurismo, música, ict, estética forte",
-     "aspecto": "9:16", "camera": "35mm de frente, reflexos de neon no rosto e nos óculos/pele",
-     "luz": "duas práticas de LED: magenta esquerda + ciano direita (3200/5600 simuladas), fundo quase preto, rim frio superior",
-     "prompt": "cena noturna neon urbana: letreiros magenta e ciano pintando os dois lados do rosto, fundo preto azulado com bokeh de luzes, reflexo de neon na pele e na roupa, atmosfera cyber leve",
-     "acao_padrao": "expressao calma quase desafiadora, leve sorriso",
-     "negativos_extra": "banding nas cores, pele alaranjada de mistura errada, letreiro neon com palavra ilegivel, brilho de flash em cima do neon (quebra a cena)",
-     "hook": "futuro próximo: 'em 2030 isso vai parecer coisa de 1999'"},
-    {"nro": 15, "nome": "BRANCO LIMPO", "aliases": ["branco", "limpo", "ecommerce", "produto"],
-     "quando": "e-commerce, marketplace, foto de cadastro, clean",
-     "aspecto": "1:1", "camera": "fixa 85mm frontal, pessoa centralizada, rodapé da composição invisível",
-     "luz": "softbox frontal amplo 5500K + rebatedores laterais; zero sombra projetada (shadow-free)",
-     "prompt": "foto de ecommerce sobre fundo branco puro infinito, luz suave sem sombra projetada, roupa vista completa do corpo (ou conforme a acao), detalhes tecidos nitidos, sem decoracao nenhuma",
-     "acao_padrao": "posicao neutra frontal, rosto a camera",
-     "negativos_extra": "sombra projetada no chão, fundo off-white (tem que ser branco), dobra de tecido irrevel, reflexo de softbox na superficie",
-     "hook": "beneficio único em 6 palavras (e-commerce não cabe história)"}
-  ]
+ "versao": 1,
+ "faixa": [
+  0,
+  15
+ ],
+ "enarios": [
+  {
+   "nro": 0,
+   "nome": "NORMAL",
+   "aliases": [
+    "normal",
+    "retrato",
+    "basico",
+    "classico"
+   ],
+   "quando": "retrato base limpo; teste de identidade; avatar",
+   "aspecto": "1:1 (feed) ou 4:5",
+   "camera": "medium close, lente 50mm, fundo neutro levemente desfocado",
+   "luz": "key suave frontal a 30 graus, fill alto (razao 4:1), sem rim forte; 5600K neutra",
+   "prompt": "retrato de estúdio limpo, fundo neutro cinza-claro sem objetos, olhando para a camera, postura natural relaxada, enquadramento do peito para cima",
+   "acao_padrao": "olhar direto para a camera com expressao neutra-confiante",
+   "negativos_extra": "fundo movimentado, objetos sobrepostos, sombras duras",
+   "hook": "direto: diga quem é / o que faz na primeira linha (sem mistério)",
+   "objetos": [
+    "painel de fundo neutro sem costura visível ou emenda"
+   ],
+   "luminosidade": "exposição 0 EV; 5600K neutra única; razão key:fill 4:1; destaque na testa protegido, sombra mantendo detalhe de poros",
+   "realismo": "uma mecha solta no cabelo; gola da camiseta levemente assimétrica"
+  },
+  {
+   "nro": 1,
+   "nome": "ESTILO PODCAST",
+   "aliases": [
+    "podcast",
+    "estilo podcast",
+    "gravação",
+    "recording"
+   ],
+   "quando": "autoridade, conversa longa, episódios",
+   "aspecto": "16:9 (capa) ou 4:5",
+   "camera": "medium shot 35mm, olho da camera, leve profundidade de campo",
+   "luz": "trio quente intimista: key 3200K a 45 graus, fill suave do oposto, rim leve traseiro; sombras suaves no rosto",
+   "prompt": "set de podcast profissional, microfone dinâmico amarrado na frente, fones na orelha, estante desfocada ao fundo com livros, parede escura quente, luz de estudio amarelada",
+   "acao_padrao": "fala para a camera como se respondesse alguem, uma maos perto do microfone",
+   "negativos_extra": "microfones duplicados, fones duplicados, cabos cruzando o rosto, segundo apresentador fantasma, letras tortas no estúdio",
+   "hook": "pergunta que só você responde: 'se eu te dissesse que...'",
+   "objetos": [
+    "microfone dinâmico com grade metálica intacta, na haste",
+    "fones closed na orelha com concha bem formatada",
+    "caneca de café na mesa com pinta de resíduo"
+   ],
+   "luminosidade": "ambiente -0.3 EV (sensação de sala fechada); 3200K dominante; razão 3:1; rim traseiro sutil separando rosto do fundo escuro; catchlight pontual nos olhos",
+   "realismo": "cabo dos fones levemente frouxo fora de alinhamento; prateleira de livros não perfeitamente nivelada"
+  },
+  {
+   "nro": 2,
+   "nome": "POV",
+   "aliases": [
+    "pov",
+    "primeira pessoa"
+   ],
+   "quando": "imersão, interação direta, humor, produto na mão",
+   "aspecto": "9:16",
+   "camera": "close levemente baixo (altura de quem conversa), 24mm, leve movimento de mão",
+   "luz": "prática natural: janela lateral difusa 5600K, fill do ambiente, sem rigidez de estúdio",
+   "prompt": "cena point-of-view: a camera e o ponto de vista de quem esta conversando com a pessoa, a pessoa olha direto para a lens, proxidade de conversa real (a uns 60cm), um objeto na mao quando fizer sentido a acao",
+   "acao_padrao": "conversa direta como se a camera fosse outra pessoa; gestos naturais de dialogo",
+   "negativos_extra": "dedos em garra, polegar invertido, mao cobrindo a lens por acidente, objeto duplo na mao, segundas maos fantasmas",
+   "hook": "comece no meio da frase: 'entao eu te pergunto:' (efeito de conversa interceptada)",
+   "objetos": [
+    "caneca de cerâmica com alça intacta e pontos de apoio corretos na mão",
+    "dedos fazendo contato com pressão plausível (deformação leve da pele no ponto de contato)"
+   ],
+   "luminosidade": "exposição 0 EV; 5600K de janela; fill alto 2:1; rosto protegido do fundo claro; sombras suaves e largas",
+   "realismo": "mesa real com marcas de uso; alça da caneca com desgaste visível"
+  },
+  {
+   "nro": 3,
+   "nome": "REELS VERTICAL",
+   "aliases": [
+    "reels",
+    "tiktok",
+    "vertical",
+    "curto"
+   ],
+   "quando": "alcance, trend, storytelling rápido",
+   "aspecto": "9:16",
+   "camera": "vertical, 24mm, energia: olhar forte, quebra de zoom sutil no hook",
+   "luz": "key frontal suave + rim de separação leve; contraste médio-alto para leitura em tela pequena",
+   "prompt": "video vertical de reels, enquadrado do quadril para cima, fundo urbano leve desfocado, composicao que deixa espaco em cima para texto, a pessoa gesticula com proposito",
+   "acao_padrao": "fala com energia para a camera, gesto de chamada no primeiro segundo",
+   "negativos_extra": "texto fora do espaco reservado, corte de ombro pela moldura, segunda pessoa no fundo",
+   "hook": "afirmacao polêmica ou número: '3 erros que estão matando seu X'",
+   "objetos": [
+    "placa/letreiro urbano com letras curtas, exatas e legíveis",
+    "pessoa de passagem cortada pela moldura de forma plausível"
+   ],
+   "luminosidade": "contraste médio-alto (leitura em tela pequena); 5600K; terço superior reservado para texto (menos ruído visual)",
+   "realismo": "piso com rachadura fina; borrão de pedestre real (nunca rosto fantasma borrado)"
+  },
+  {
+   "nro": 4,
+   "nome": "STORY CONVERSA",
+   "aliases": [
+    "story",
+    "casual",
+    "dia a dia"
+   ],
+   "quando": "proximidade, bastidores, resposta direta",
+   "aspecto": "9:16",
+   "camera": "selfie-real 24mm, levemente de cima (angulo de celular na mao), proximidade",
+   "luz": "ring light frontal amaciado 4500K, brilho de celular, sombras mínimas",
+   "prompt": "story autenticas: parece tirada de celular, fundo de ambiente real (sala/rua), leve imperfeicao de foco, a pessoa segura a camera com uma mao e fala",
+   "acao_padrao": "responde uma DM imaginada, tom conversado",
+   "negativos_extra": "luz de estudio perfeita demais (quebra a vibe), anel de luz com reflexo duplo estranho, dedo cortando o canto",
+   "hook": "repita a pergunta do seguidor: 'me perguntaram se... a resposta curta: sim.'",
+   "objetos": [
+    "celular selfie parcial na moldura (se aplicável)",
+    "reflexo de ring light como catchlight ÚNICO e pontual nos olhos"
+   ],
+   "luminosidade": "luz suave acentuadamente plana: 1:2; 4500K; sombras mínimas MAS micro-contraste preservado na pele (olho nunca preto puro)",
+   "realismo": "canto do quarto levemente desalinhado; parede com textura real (não fundo liso)"
+  },
+  {
+   "nro": 5,
+   "nome": "GIMBAL MOVIMENTO",
+   "aliases": [
+    "gimbal",
+    "movimento",
+    "caminhando"
+   ],
+   "quando": "dinamismo, transição, energia de rua",
+   "aspecto": "9:16",
+   "camera": "tracking em movimento a 35mm, levemente abaixo do olho, leve motion blur de fundo",
+   "luz": "natural da cena (dia aberto 5600K ou noturno de letreiros), sem hard artificial",
+   "prompt": "caminhando ate a camera em avenida/corredor, camera em gimbal recuando, fundo com leve motion blur, roupas com movimento, passo confiante",
+   "acao_padrao": "caminha falando direto para a camera, olhar constante",
+   "negativos_extra": "passos congelados/estranhos, perna extra no movimento, cabelo parado enquanto corpo anda, reflexo duplo de camera",
+   "hook": "frase que completa com a chegada: 'tá indo te mostrar uma coisa...'",
+   "objetos": [
+    "móvel de rua (poste/faixa de pedestre) sem deformação",
+    "tênis/bolsa com movimento físico coerente com a passada"
+   ],
+   "luminosidade": "dia 5600K ou noite de letreiros; exposição -0.3 EV para sensação de movimento; UMA direção dominante de luz",
+   "realismo": "cinto da jaqueta balançando com a passada; uma gota de chuva no piso refletindo o letreiro"
+  },
+  {
+   "nro": 6,
+   "nome": "QUARTO ESTILO",
+   "aliases": [
+    "quarto",
+    "cozy",
+    "home",
+    "setup"
+   ],
+   "quando": "identidade criador, setup, rotina, vídeo-aula longa",
+   "aspecto": "16:9 ou 4:5",
+   "camera": "fixa 35mm, plano médio, profundidade que mostra o setup desfocado",
+   "luz": "mix quente aconchegante: lampada de mesa 2700K como prática + key frontal suave 4500K, janela fria leve ao fundo",
+   "prompt": "cantinho de quarto/escritorio pessoal: carteira com notebook, lampada de mesa acesa, plantas, poster na parede desfocada, luz aconchegante de fim de tarde",
+   "acao_padrao": "sentado na frente do setup, pausa pensativa olhando a camera",
+   "negativos_extra": "setup genérico de banco de imagem, monitores duplicados, cabos visíveis demais, relógio com horas erradas",
+   "hook": "confissão de rotina: 'o que ninguém conta sobre trabalhar de casa...'",
+   "objetos": [
+    "notebook aberto com conteúdo de tela plausível e levemente desfocado",
+    "lâmpada de mesa ACESA com fonte de luz visível dentro do quadro",
+    "prateleira/planta sem folha morta proeminente"
+   ],
+   "luminosidade": "DUAS temperaturas são o padrão DO CENÁRIO: 2700K da lâmpada (prático) + 4500K key; exposição 0 EV; sombra dupla coerente com as duas fontes visíveis",
+   "realismo": "cabo do fone pendendo frouxo; post-it torto no monitor; garrafa de água pela metade"
+  },
+  {
+   "nro": 7,
+   "nome": "ESTUDIO PROFISSIONAL",
+   "aliases": [
+    "estudio",
+    "profissional",
+    "corp"
+   ],
+   "quando": "site, pitch, capa de lançamento, corporativo com cara",
+   "aspecto": "4:5 ou 1:1",
+   "camera": "85mm, retrato formal do peito pra cima, foco cirúrgico no olho mais próximo",
+   "luz": "clássica de estúdio: key 45 graus 5200K (softbox), fill 2x mais fraco, hair light traseiro superior; fundo com gradiente",
+   "prompt": "estudio fotográfico profissional, fundo com gradiente suave de cor sólida, luz classica de tres pontos, roupa social despojada, posicao de poder relaxada",
+   "acao_padrao": "expressao confiante, leve sorriso fechado, ombros abertos",
+   "negativos_extra": "reflexo duplo de softbox no olho, fundo com emenda visivel, sombra dupla sob o queixo",
+   "hook": "autoridade seca: uma frase de posicionamento, sem grito",
+   "objetos": [
+    "roupa com vincos naturais e gravata/fivela centralizada",
+    "fundo com gradiente uniforme (sem emenda)"
+   ],
+   "luminosidade": "5200K estúdio; razão 5:1 com fill para manter poros na sombra; gradiente de fundo cinza-médio; nenhum estouro na têmpora",
+   "realismo": "um vinco natural na manga; simetria quase perfeita (cenário formal permite mais ordem que os outros)"
+  },
+  {
+   "nro": 8,
+   "nome": "AURORE",
+   "aliases": [
+    "aurea",
+    "golden hour",
+    "anoitecer"
+   ],
+   "quando": "emoção, lifestyle, encerramento de dia",
+   "aspecto": "9:16 ou 16:9",
+   "camera": "35mm, contraluz com proteção de sombra no rosto (fill da mão/reflexo)",
+   "luz": "sol baixo atrás 2800K, rim de fogo no cabelo/ombro, fill dourado de rebote na frente; céu alaranjado",
+   "prompt": "golden hour ao ar livre, sol baixo criando rim light quente nos contornos, leve flare controlado na lente, sombras longas, tom dourado-rosado no ar",
+   "acao_padrao": "olhando levemente para o lado pensando, cabelo mexido pelo vento",
+   "negativos_extra": "duas sombras em direções diferentes, sol duplo, pele verde de mistura de temperatura, nuvens sintéticas perfeitas",
+   "hook": "frase de fechamento de dia: 'isso que ninguém vê antes das 6 da manhã...'",
+   "objetos": [
+    "sol direcional único (visível ou fora do quadro, mas com direção provável)",
+    "sombras longas tocando o chão no ângulo correto",
+    "óculos refletindo o sol (se houver) na posição exata da fonte"
+   ],
+   "luminosidade": "+0.7 EV no rim traseiro, rosto 0 EV com fill dourado de rebote; rim 2800K + fill 3500K (duas fontes, ambas naturais); céu NUNCA estourado — manter o gradiente alaranjado",
+   "realismo": "vento no cabelo; poeira suspensa pegando a luz (bokeh de partículas)"
+  },
+  {
+   "nro": 9,
+   "nome": "URBANO",
+   "aliases": [
+    "urbano",
+    "rua",
+    "street",
+    "candid"
+   ],
+   "quando": "atitude, streetwear, prova social de vida real",
+   "aspecto": "9:16",
+   "camera": "50mm, sensação de foto de passagem, foco rápido",
+   "luz": "natural de rua: dia nublado difuso ou letreiro noturno como prática pontual",
+   "prompt": "street photography urbana, calçadão/avenia, bokeh de letreiros e pessoas ao fundo, vestimenta streetwear, atitude de quem passa despercebido",
+   "acao_padrao": "olha de perfil para a camera como quem acabou de notar o fotografo",
+   "negativos_extra": "pessoas fantasma cortadas ao meio, letreiro com letra errada, duas sombras de calçada",
+   "hook": "contraste: a cidade grita, a frase sussurra",
+   "objetos": [
+    "letreiro com palavra curta REAL e coerente (3 letras no máximo de dúvida)",
+    "piscina de água no asfalto refletindo o letreiro no lado certo"
+   ],
+   "luminosidade": "dia difuso 5600K ou noturno de letreiro; exposição 0 EV; rosto jamais plano (manter contorno do osso zigomático)",
+   "realismo": "um charuto de bituca no chão? NÃO — mancha de borrão de pneu; passageiro real em foco aberto"
+  },
+  {
+   "nro": 10,
+   "nome": "CAFETERIA",
+   "aliases": [
+    "cafeteria",
+    "cafe",
+    "work cafe"
+   ],
+   "quando": "relatable, rotina, conteúdo de valor ('te ensinando')",
+   "aspecto": "4:5",
+   "camera": "35mm de lado da mesa (visão do outro cliente), lata/café em primeiro plano levemente desfocado",
+   "luz": "janela lateral natural 5600K, contraste suave, vapor do café como textura (opcional)",
+   "prompt": "cafeteria com luz de janela, mesa de madeira, notebook aberto e cafe na frente, cadeira de restaurante ao fundo desfocada, atmosfera tranquila de trabalho remoto",
+   "acao_padrao": "explica algo apontando para o notebook, sorriso leve, cafe perto",
+   "negativos_extra": "copos duplos, reflexo estranho na tela, letreiro do cafe com palavra torta, mao com 6 dedos segurando a caneca",
+   "hook": "promessa prática: 'a mesma ideia que usei pro meu X, em 30 segundos'",
+   "objetos": [
+    "caneca com vapor fino e plausível (trilhas tênues, não nuvem)",
+    "notebook com conteúdo de tela crível",
+    "ponto de anel de café na madeira (marca de caneca)"
+   ],
+   "luminosidade": "luz lateral de janela 5600K; razão 3:1 direcional; vapor contraluzado em silhueta; highlight na borda da caneca",
+   "realismo": "caneta ao lado do notebook; a marca de anel de café na mesa (imperfecção que ancora a cena)"
+  },
+  {
+   "nro": 11,
+   "nome": "FITNESS",
+   "aliases": [
+    "fitness",
+    "academia",
+    "treino",
+    "gym"
+   ],
+   "quando": "transformação, disciplina, antes/depois, prova de processo",
+   "aspecto": "9:16",
+   "camera": "baixa 28mm (ângulo heróico), close no esforço",
+   "luz": "fluorescente de academia real (5600K frio) ou janela lateral dura de box; suor = highlight real",
+   "prompt": "academia funcional, halteres/barras ao fundo, roupa tecnica correta, gota de sudo no rosto, luz dura lateral marcando o relevo muscular, ambiente real de treino",
+   "acao_padrao": "pausa entre repeticoes olhando a camera, respiracao visivel",
+   "negativos_extra": "halter deformado/derretido, corda do aparelho fantasma, espelho refletindo versao diferente do rosto, suor virando poça fora do lugar",
+   "hook": "número de processo: 'dia 47. o que mudou desde o 1:'",
+   "objetos": [
+    "halter/barras com textura de usinagem intacta (knurling)",
+    "colchonete sem rasgo; marcas de uso plausíveis",
+    "suor como pontos especulares pequenos (nunca rios)"
+   ],
+   "luminosidade": "fluorescente duro 5600K + janela lateral dura; razão 6:1 escultorando o relevo; suado = brilhos pontuais coerentes com a fonte",
+   "realismo": "resíduo de giz na barra; pegadas antigas no colchonete"
+  },
+  {
+   "nro": 12,
+   "nome": "PALCO",
+   "aliases": [
+    "palco",
+    "apresentacao",
+    "talk",
+    "keynote"
+   ],
+   "quando": "grandeza, evento, fala, autoridade pública",
+   "aspecto": "16:9",
+   "camera": "85mm da plateia (leve subida), spotlight com facho visível na fumaça",
+   "luz": "spot principal 4800K duro com pool no chão, fill azul frio residual, plateia preta",
+   "prompt": "palco de conferencia, spot unico com facho visivel na fumaca leve, plateia em silhueta escura, microfone de lapela, tela gigante desfocada atraz",
+   "acao_padrao": "gesto de apertura na fala, olhar varrendo a plateia",
+   "negativos_extra": "duas pessoas no palco sem pedido, letreiro do evento com letras tortas, facho de luz sem fonte visivel, plateia com rostos borrados estranhos",
+   "hook": "a frase da talk: a que valeria gravar no celular",
+   "objetos": [
+    "tela LED do palco com gráfico limpo (sem letra vazando)",
+    "lapela de microfone bem presa",
+    "fumaça apenas dentro do facho do spot"
+   ],
+   "luminosidade": "spot 4800K no sujeito; ambiente -1.5 EV; plateia preta com detalhe apenas nas primeiras 2 fileiras; facho visível",
+   "realismo": "uma cabeça na plateia erguendo celular para filmar (silhueta)"
+  },
+  {
+   "nro": 13,
+   "nome": "LIFESTYLE PRODUCOAO",
+   "aliases": [
+    "lifestyle",
+    "flatlay",
+    "producao",
+    "unboxing"
+   ],
+   "quando": "produto no contexto, rotina curada, 'como eu uso'",
+   "aspecto": "4:5",
+   "camera": "overhead-leve 45 graus com a pessoa no quadro + flatlay de elementos",
+   "luz": "difusa ampla (softbox grande ou varanda), sombras suaves e longas em diagonal",
+   "prompt": "composicao lifestyle overhead-diagonal: a pessoa na cena com os objetos do produto dispostos com folga (caneca, caderno, acessorios), paleta coerente, espaco negativo generoso",
+   "acao_padrao": "interage com um dos objetos (abre/escreve/apresenta) olhando para a camera",
+   "negativos_extra": "objetos flutuando sem sombra, sombra dupla dos objetos, logo de marca aleatoria, mao cortada pela borda do quadro",
+   "hook": "o item-herói nomeado: 'esse objeto que resolveu meu X'",
+   "objetos": [
+    "produto/herói com logo e etiqueta NÃO distorcidos (descrever a palavra exata entre aspas)",
+    "tecido com trama visível (fiapos reais)",
+    "SOMBA DE CONTATO sob cada objeto (shadowless ≠ sem sombra de contato)"
+   ],
+   "luminosidade": "softbox amplo 5500K; exposição +0.3 EV; sem sombra projetada NO CHÃO MAS com sombra de contato sob os objetos",
+   "realismo": "um único objeto levemente fora do grid perfeito (vida na composição)"
+  },
+  {
+   "nro": 14,
+   "nome": "NEON NOTURNO",
+   "aliases": [
+    "neon",
+    "noturno",
+    "cyber",
+    "noite"
+   ],
+   "quando": "futurismo, música, ict, estética forte",
+   "aspecto": "9:16",
+   "camera": "35mm de frente, reflexos de neon no rosto e nos óculos/pele",
+   "luz": "duas práticas de LED: magenta esquerda + ciano direita (3200/5600 simuladas), fundo quase preto, rim frio superior",
+   "prompt": "cena noturna neon urbana: letreiros magenta e ciano pintando os dois lados do rosto, fundo preto azulado com bokeh de luzes, reflexo de neon na pele e na roupa, atmosfera cyber leve",
+   "acao_padrao": "expressao calma quase desafiadora, leve sorriso",
+   "negativos_extra": "banding nas cores, pele alaranjada de mistura errada, letreiro neon com palavra ilegivel, brilho de flash em cima do neon (quebra a cena)",
+   "hook": "futuro próximo: 'em 2030 isso vai parecer coisa de 1999'",
+   "objetos": [
+    "letreiro neon com palavra EXATA e correta (entre aspas)",
+    "reflexo do neon na pele/óculos na posição coerente com a fonte (esq./dir.)"
+   ],
+   "luminosidade": "dupla prática magenta+ciano (3200/5600 simulados); fundo próximo de preto (não preto morto); exposição 0 EV; saturação controlada (zero banding)",
+   "realismo": "um dos neons levemente piscando (plausível); condensação no copo ao fundo"
+  },
+  {
+   "nro": 15,
+   "nome": "BRANCO LIMPO",
+   "aliases": [
+    "branco",
+    "limpo",
+    "ecommerce",
+    "produto"
+   ],
+   "quando": "e-commerce, marketplace, foto de cadastro, clean",
+   "aspecto": "1:1",
+   "camera": "fixa 85mm frontal, pessoa centralizada, rodapé da composição invisível",
+   "luz": "softbox frontal amplo 5500K + rebatedores laterais; zero sombra projetada (shadow-free)",
+   "prompt": "foto de ecommerce sobre fundo branco puro infinito, luz suave sem sombra projetada, roupa vista completa do corpo (ou conforme a acao), detalhes tecidos nitidos, sem decoracao nenhuma",
+   "acao_padrao": "posicao neutra frontal, rosto a camera",
+   "negativos_extra": "sombra projetada no chão, fundo off-white (tem que ser branco), dobra de tecido irrevel, reflexo de softbox na superficie",
+   "hook": "beneficio único em 6 palavras (e-commerce não cabe história)",
+   "objetos": [
+    "roupa com textura de trama visível (jamais cerada)",
+    "fundo branco #FFFFFF uniforme (zero gradiente)",
+    "micro-vinco natural em ponto único da barra"
+   ],
+   "luminosidade": "softbox frontal amplo 5500K; branco puro 255 sem zona estourada na pele (expor pela roupa); micro-contraste na trama",
+   "realismo": "o micro-vinco natural na barra da peça (a única assinatura viva)"
+  }
+ ],
+ "naturalismo": {
+  "modificador": "photorealistic, natural candid photography, realistic skin texture with visible pores and subsurface scattering, subtle sensor grain, available/practical light only, slightly imperfect human framing, one flyaway strand of hair",
+  "regra": "95% controle + 5% vivido: exatamente UMA imperfeição plausível por quadro (cabo frouxo, respingo na mesa, fio solto). Imagem 'perfeitamente limpa' reprova o item 16 do QC.",
+  "pele": "skin with subsurface scattering, pores at close range, natural redness variation on cheeks and nose, no airbrush"
+ }
 }

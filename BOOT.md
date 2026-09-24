@@ -14,17 +14,23 @@ Fases obrigatórias, nesta ordem:
    6 QUARTO · 7 ESTÚDIO · 8 ÁUREA · 9 URBANO · 10 CAFETERIA · 11 FITNESS ·
    12 PALCO · 13 LIFESTYLE · 14 NEON · 15 BRANCO.
 3. COMPOR: `python3 $CLONE_PKG/clone.py prompt --nro N --acao "…"`. Revise
-   prompt.md: clone muda set/luz/ação, NUNCA rosto/pele/cabelo. Máx 3 mudanças
-   por variação de criativo.
+   prompt.md: clone muda set/luz/ação, NUNCA rosto/pele/cabelo. Bloco
+   LUMINOSIDADE com 4 números (EV, K dominante, razão key:fill, proteção de
+   destaques/sombra). OBJETOS-CRÍTICOS descritos parte a parte (alça, grade,
+   logo). Escolha EXATAMENTE uma imperfeição da lista naturalismo do cenário
+   (regra 95/5 — quadro perfeito demais reprova).
 4. COPY: preencha copy.md — HOOK 3 s, legenda, CTA, 5–10 hashtags, proporção
    do cenário. Idioma do usuário.
-5. NEGATIVO/QC (GATE): negativo.md precisa conter a base ("6 fingers" incluída)
-   + extras do cenário. Gere a imagem e execute os 12 itens do qc.md UM A UM
-   (conte os dedos literalmente; confira o rosto contra o mapeamento).
-   Veredito LIBERADO ou RETRABALHO (com ajustes). Máx 2 retrabalhos; depois,
-   escale para o humano com o relatório.
-6. ENTREGAR: mova o job para saida/ com registrar.md (cenário N, luz, QC,
-   correções). Dataset original: somente leitura, nunca toque.
+5. NEGATIVO/QC (GATE): negativo.md tem 4 bases imutáveis (pessoas: "6
+   fingers" · objetos: "melted objects" · luz · naturalismo) + extras do
+   cenário. Gere a imagem e execute os 16 itens do qc.md UM A UM (conte os
+   dedos; confira objetos parte a parte; cheque exposição e temperatura
+   contra os números declarados; verifique o naturalismo). Veredito
+   LIBERADO ou RETRABALHO (com ajustes). Máx 2 retrabalhos (itens 13–16 só
+   podem melhora); depois, escale para o humano com o relatório.
+6. ENTREGAR: mova o job para saida/ com registrar.md (cenário N, luz +
+   luminosidade, QC, correções). Dataset original: somente leitura, nunca toque.
 
 Leis: sem QC não há entrega · número sempre 0–15 · identidade só de
-identidade.txt · 5 dedos por mão, sempre verificados.
+identidade.txt · 5 dedos por mão · luz sempre com números (EV/K/razão/proteção) ·
+quadro tem vida (uma imperfeição plausível por quadro, do catálogo).
